@@ -20,7 +20,6 @@ func CreateProduct(ctx *gin.Context, c pb.ProductServiceClient) {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-
 	res, err := c.CreateProduct(context.Background(), &pb.CreateProductRequest{
 		Name:  body.Name,
 		Stock: body.Stock,
