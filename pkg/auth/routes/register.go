@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/akshayUr04/go-grpc-api-gateway/pkg/auth/pb"
@@ -22,6 +23,27 @@ func Register(ctx *gin.Context, c pb.AuthServiceClient) {
 	}
 
 	res, err := c.Register(context.Background(), &pb.RegisterRequest{
+		Email:    body.Email,
+		Password: body.Password,
+	})
+
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadGateway, err)
+		return
+	}
+
+	ctx.JSON(int(res.Status), &res)
+}
+
+func AdminRegister(ctx *gin.Context, c pb.AuthServiceClient) {
+	body := RegisterRequestBody{}
+
+	if err := ctx.BindJSON(&body); err != nil {
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+	fmt.Println("---adminreg body---", body)
+	res, err := c.AdminRegister(context.Background(), &pb.AdminRegisterRequest{
 		Email:    body.Email,
 		Password: body.Password,
 	})

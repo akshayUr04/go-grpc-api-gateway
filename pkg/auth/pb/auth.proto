@@ -6,12 +6,15 @@ option go_package = "./pkg/auth/pb";
 
 service AuthService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc AdminRegister(AdminRegisterRequest)returns(AdminRegisterResponse){}
   rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc AdminLogin(AdminLoginRequest)returns(AdminLoginResponse){}
   rpc Validate(ValidateRequest) returns (ValidateResponse) {}
 }
 
 // Register
 
+//This generate a RegisterRequest struct in the pb.go file
 message RegisterRequest {
   string email = 1;
   string password = 2;
@@ -22,6 +25,15 @@ message RegisterResponse {
   string error = 2;
 }
 
+message AdminRegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AdminRegisterResponse {
+  int64 status = 1;
+  string error = 2;
+}
 // Login
 
 message LoginRequest {
@@ -34,7 +46,16 @@ message LoginResponse {
   string error = 2;
   string token = 3;
 }
+message AdminLoginRequest {
+  string email = 1;
+  string password = 2;
+}
 
+message AdminLoginResponse {
+  int64 status = 1;
+  string error = 2;
+  string token = 3;
+}
 // Validate
 
 message ValidateRequest { string token = 1; }
