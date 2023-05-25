@@ -3,6 +3,7 @@ module github.com/akshayUr04/go-grpc-api-gateway
 go 1.20
 
 require (
+	github.com/aws/smithy-go v1.13.5
 	github.com/gin-gonic/gin v1.9.0
 	github.com/spf13/viper v1.15.0
 	google.golang.org/grpc v1.55.0
