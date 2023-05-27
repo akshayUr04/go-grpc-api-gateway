@@ -16,9 +16,9 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 	}
 
 	routes := r.Group("/product")
+	routes.GET("/:id", svc.FindOne)
 	routes.Use(a.AdminAuth)
 	routes.POST("/", svc.CreateProduct)
-	routes.GET("/:id", svc.FindOne)
 }
 
 func (svc *ServiceClient) FindOne(ctx *gin.Context) {

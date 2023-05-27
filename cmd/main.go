@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/akshayUr04/go-grpc-api-gateway/pkg/auth"
+	"github.com/akshayUr04/go-grpc-api-gateway/pkg/cart"
 	"github.com/akshayUr04/go-grpc-api-gateway/pkg/config"
 	"github.com/akshayUr04/go-grpc-api-gateway/pkg/order"
 	"github.com/akshayUr04/go-grpc-api-gateway/pkg/product"
@@ -21,6 +22,7 @@ func main() {
 	authSvc := *auth.RegisterRoutes(r, &c)
 	product.RegisterRoutes(r, &c, &authSvc)
 	order.RegisterRoutes(r, &c, &authSvc)
+	cart.RegisterRoutes(r, &c, &authSvc)
 
 	r.Run(c.Port)
 }

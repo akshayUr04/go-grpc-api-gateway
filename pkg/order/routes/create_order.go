@@ -36,3 +36,16 @@ func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 
 	ctx.JSON(http.StatusCreated, &res)
 }
+
+func OrderFromCart(ctx *gin.Context, c pb.OrderServiceClient) {
+	userId, _ := ctx.Get("userId")
+	res, err := c.OrderFromCart(context.Background(), &pb.OrderFromCartRequest{
+		UserId: userId.(int64),
+	})
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadGateway, err)
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, &res)
+}
