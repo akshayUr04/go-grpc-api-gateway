@@ -10,6 +10,8 @@ type Config struct {
 	CartSvcUrl    string `mapstructure:"CART_SVC_URL"`
 }
 
+var envs = []string{"PORT", "AUTH_SVC_URL", "PRODUCT_SVC_URL", "ORDER_SVC_URL", "CART_SVC_URL"}
+
 func LoadConfig() (c Config, err error) {
 	viper.AddConfigPath("./pkg/config/envs")
 	viper.SetConfigName("dev")
@@ -21,6 +23,12 @@ func LoadConfig() (c Config, err error) {
 
 	if err != nil {
 		return
+	}
+
+	for _, env := range envs {
+		if err = viper.BindEnv(env); err != nil {
+			return
+		}
 	}
 
 	err = viper.Unmarshal(&c)
